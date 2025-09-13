@@ -78,21 +78,3 @@ function App() {
 
 export default App;
 
-
-      {/* Input bar */}
-      <form onSubmit={handleSubmit} className="input-bar">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Ask me something..."
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "..." : "Send"}
-        </button>
-      </form>
-    </div>
-  );
-}
-
-export default App;
