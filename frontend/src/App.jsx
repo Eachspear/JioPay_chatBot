@@ -18,7 +18,7 @@ function App() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://127.0.0.1:8000/chat", {
+      const res = await axios.post("https://jiopay-chatbot-2.onrender.com/chat", {
         query,
         top_k: 5,
         embed_model: "all-MiniLM-L6-v2",
@@ -59,6 +59,25 @@ function App() {
         {loading && <div className="message assistant">Thinking...</div>}
         <div ref={chatEndRef}></div>
       </main>
+
+      {/* Input bar */}
+      <form onSubmit={handleSubmit} className="input-bar">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Ask me something..."
+        />
+        <button type="submit" disabled={loading}>
+          {loading ? "..." : "Send"}
+        </button>
+      </form>
+    </div>
+  );
+}
+
+export default App;
+
 
       {/* Input bar */}
       <form onSubmit={handleSubmit} className="input-bar">
