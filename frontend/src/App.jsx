@@ -1,55 +1,77 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import "./App.css";
 
 function App() {
+  const [messages, setMessages] = useState([]);
   const [query, setQuery] = useState("");
-  const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
+  const chatEndRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!query.trim()) return;
+
+    const newMessages = [...messages, { role: "user", content: query }];
+    setMessages(newMessages);
+    setQuery("");
     setLoading(true);
-    setAnswer("");
 
     try {
       const res = await axios.post("http://127.0.0.1:8000/chat", {
-        query: query,
+        query,
         top_k: 5,
         embed_model: "all-MiniLM-L6-v2",
       });
 
-      setAnswer(res.data.answer);
+      setMessages([
+        ...newMessages,
+        { role: "assistant", content: res.data.answer || "No response." },
+      ]);
     } catch (err) {
       console.error(err);
-      setAnswer("❌ Error: Could not fetch response.");
+      setMessages([
+        ...newMessages,
+        { role: "assistant", content: "❌ Error: Could not fetch response." },
+      ]);
     } finally {
       setLoading(false);
     }
   };
 
+  // Auto scroll to bottom when messages change
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
+
   return (
-    <div style={{ maxWidth: "600px", margin: "auto", padding: "20px" }}>
-      <h1>JioPay Assistant</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="app-container">
+      {/* Header */}
+      <header className="header">JioPay Assistant</header>
+
+      {/* Chat window */}
+      <main className="chat-window">
+        {messages.map((msg, idx) => (
+          <div key={idx} className={`message ${msg.role}`}>
+            {msg.content}
+          </div>
+        ))}
+        {loading && <div className="message assistant">Thinking...</div>}
+        <div ref={chatEndRef}></div>
+      </main>
+
+      {/* Input bar */}
+      <form onSubmit={handleSubmit} className="input-bar">
         <input
           type="text"
-          placeholder="Ask me something..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+          placeholder="Ask me something..."
         />
         <button type="submit" disabled={loading}>
-          {loading ? "Loading..." : "Ask"}
+          {loading ? "..." : "Send"}
         </button>
       </form>
-      <div style={{ marginTop: "20px", whiteSpace: "pre-wrap" }}>
-        {answer && (
-          <>
-            <h3>Answer:</h3>
-            <p>{answer}</p>
-          </>
-        )}
-      </div>
     </div>
   );
 }

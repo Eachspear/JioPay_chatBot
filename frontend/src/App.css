@@ -1,42 +1,96 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* Full screen container */
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f3f4f6; /* gray-100 */
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header */
+.header {
+  background-color: #4f46e5; /* indigo-600 */
+  color: white;
+  padding: 1rem;
   text-align: center;
+  font-weight: 600;
+  font-size: 1.25rem;
+  flex-shrink: 0;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Chat area */
+.chat-window {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Message bubbles */
+.message {
+  max-width: 70%;
+  padding: 0.75rem 1rem;
+  border-radius: 1.25rem;
+  margin-bottom: 0.75rem;
+  word-wrap: break-word;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.message.user {
+  background-color: #4f46e5;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 0.25rem;
 }
 
-.card {
-  padding: 2em;
+.message.assistant {
+  background-color: white;
+  color: #1f2937;
+  margin-right: auto;
+  border: 1px solid #e5e7eb;
+  border-bottom-left-radius: 0.25rem;
 }
 
-.read-the-docs {
-  color: #888;
+/* Input bar */
+.input-bar {
+  display: flex;
+  padding: 0.75rem;
+  background-color: white;
+  border-top: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.input-bar input {
+  flex: 1;
+  border: 1px solid #d1d5db;
+  border-radius: 9999px;
+  padding: 0.5rem 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-bar input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79,70,229,0.3);
+}
+
+.input-bar button {
+  margin-left: 0.5rem;
+  background-color: #4f46e5;
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.input-bar button:hover {
+  background-color: #4338ca;
+}
+
+.input-bar button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

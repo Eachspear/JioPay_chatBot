@@ -1,0 +1,9 @@
+{
+  "index_type": "flat",
+  "dimension": 384,
+  "num_vectors": 10,
+  "created_at": 1757747685.883146,
+  "nlist": null,
+  "M": null,
+  "efConstruction": null
+}
