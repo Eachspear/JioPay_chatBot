@@ -86,6 +86,7 @@ app.add_middleware(
         "http://localhost:5173",     # Vite dev server  
         "http://127.0.0.1:3000",
         "http://127.0.0.1:5173",
+        "https://jio-pay-chat-bot-as2e.vercel.app",
         # Add your production domains here
     ],
     allow_credentials=True,
