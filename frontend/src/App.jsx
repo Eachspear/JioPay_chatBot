@@ -18,7 +18,7 @@ function App() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://127.0.0.1:8000/chat", {
+      const res = await axios.post("https://jiopay-chatbot-2.onrender.com/chat", {
         query,
         top_k: 5,
         embed_model: "all-MiniLM-L6-v2",
@@ -77,3 +77,4 @@ function App() {
 }
 
 export default App;
+
