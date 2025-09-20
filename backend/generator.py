@@ -46,7 +46,6 @@ class GenerationConfig:
     repetition_penalty: float = 1.05
 
 
-
 class BaseGenerator(ABC):
     """Abstract base class for answer generators."""
     
@@ -72,7 +71,7 @@ class HuggingFaceGenerator(BaseGenerator):
         't5-small': {'name': 't5-small', 'type': 'seq2seq', 'description': 'Basic T5 model', 'context_length': 512}
     }
     
-    def __init__(self, model_name: str = 'flan-t5-small', device: Optional[str] = None, cache_dir: Optional[str] = None):
+    def __init__(self, model_name: str = 'flan-t5-base', device: Optional[str] = None, cache_dir: Optional[str] = None):
         self.model_name = model_name
         self.cache_dir = cache_dir
         if device is None:
@@ -208,7 +207,7 @@ else:
         def is_available(self) -> bool: return False
 
 
-def create_generator(provider: str = 'huggingface', model_name: str = 'flan-t5-small', **kwargs) -> BaseGenerator:
+def create_generator(provider: str = 'huggingface', model_name: str = 'flan-t5-base', **kwargs) -> BaseGenerator:
     if provider == 'huggingface':
         return HuggingFaceGenerator(model_name=model_name, **kwargs)
     elif provider == 'openai':
@@ -224,18 +223,18 @@ _default_generator = None
 def load_model():
     global _default_generator
     if _default_generator is None:
-        _default_generator = HuggingFaceGenerator()
+        _default_generator = HuggingFaceGenerator(model_name="flan-t5-base")
         _default_generator.load_model()
     return _default_generator.tokenizer, _default_generator.model
 
 def build_prompt(query: str, retrieved: List[Dict], max_context_chars: int = 3000) -> str:
-    generator = HuggingFaceGenerator()
+    generator = HuggingFaceGenerator(model_name="flan-t5-base")
     return generator.build_prompt(query, retrieved, max_context_chars)
 
 def generate_answer(query: str, retrieved: List[Dict], max_new_tokens: int = 200) -> str:
     global _default_generator
     if _default_generator is None:
-        _default_generator = HuggingFaceGenerator()
+        _default_generator = HuggingFaceGenerator(model_name="flan-t5-base")
     config = GenerationConfig(max_new_tokens=max_new_tokens)
     result = _default_generator.generate_answer(query, retrieved, config)
     return result['answer']

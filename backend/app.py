@@ -58,7 +58,7 @@ async def lifespan(app: FastAPI):
     # Initialize generator if available
     if GENERATOR_AVAILABLE:
         try:
-            app_state["generator"] = HuggingFaceGenerator(model_name='flan-t5-small')
+            app_state["generator"] = HuggingFaceGenerator(model_name='flan-t5-large')
             logger.info("Generator initialized successfully")
         except Exception as e:
             logger.error(f"Failed to initialize generator: {e}")
@@ -108,7 +108,7 @@ class ChatRequest(BaseModel):
         description="Generator provider (huggingface or openai)"
     )
     generator_model: str = Field(
-        default="flan-t5-small",
+        default="flan-t5-base",
         description="Generator model name"
     )
     include_debug: bool = Field(

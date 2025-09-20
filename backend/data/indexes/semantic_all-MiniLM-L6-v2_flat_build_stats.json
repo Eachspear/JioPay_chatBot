@@ -12,12 +12,12 @@
     "index_name": null
   },
   "stats": {
-    "documents_loaded": 4,
-    "documents_processed": 2,
-    "chunks_generated": 10,
-    "embeddings_created": 10,
-    "build_time": 0.003849506378173828,
+    "documents_loaded": 13,
+    "documents_processed": 11,
+    "chunks_generated": 55,
+    "embeddings_created": 55,
+    "build_time": 0.008122920989990234,
     "errors": []
   },
-  "timestamp": 1757747685.88593
+  "timestamp": 1758361808.4324481
 }
